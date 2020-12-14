@@ -11,11 +11,15 @@ Note:  The scripts only install and configure the primary k8s node.
   `install-k8s-01.sh`
 
   ```
-  sudo apt-get install containerd -y
+sudo apt-get install containerd -y
 
 sudo mkdir -p /etc/containerd
 
 containerd config default | sudo tee /etc/containerd/config.toml
+
+sudo systemctl restart containerd
+
+sudo systemctl status containerd
 
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 
@@ -25,14 +29,16 @@ sudo apt-get install kubeadm kubelet kubectl -y
 
 sudo apt-mark hold kubeadm kubelet kubectl containerd
 
+#echo 'net.bridge.bridge-nf-call-iptables = 1' | sudo tee -a /etc/sysctl.conf
+
 SOURCE_FILE="/etc/sysctl.conf"
 LINE_INPUT="net.bridge.bridge-nf-call-iptables = 1"
 
 grep -qF "$LINE_INPUT" "$SOURCE_FILE"  || echo "$LINE_INPUT" | sudo tee -a "$SOURCE_FILE"
 
-#echo 'net.bridge.bridge-nf-call-iptables = 1' | sudo tee -a /etc/sysctl.conf
-
 sudo echo '1' | sudo tee /proc/sys/net/ipv4/ip_forward
+
+cat /proc/sys/net/ipv4/ip_forward
 
 sudo sysctl --system
 
@@ -41,23 +47,16 @@ sudo modprobe br_netfilter
 
 sudo swapoff -a
 
-sudo sed -i.bak '/ swap / s/^(.*)$/#1/g' /etc/fstab
+sudo sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab
+
+cat /etc/fstab
 
 sudo kubeadm config images pull
 
-IP_ADDR=$(hostname -i)
+IP_ADDR=`hostname -I | awk '{print $1}'`
 
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=$IP_ADDR
-```
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${IP_ADDR}
 
-
-## Create kube config and install Network CNI
-
-  `install-k8s-02.sh`
-  After kubernetes is installed, Copy the kube config and 
-  install Weave CNI. Flannel is also in the script if desired.
-
-```
 mkdir -p $HOME/.kube
 
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -68,30 +67,18 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl versio
 
 #kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
-kubectl get nodes
-```
-
-
-
-##   Install crictl command line application to interact with containerd.
-
-  `install-cri-tool.sh`
-
-```
-export VERSION="v1.19.0"
-wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz
-sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin
-rm -f crictl-$VERSION-linux-amd64.tar.gz
+sudo cp ./crictl.yaml /etc/crictl.yaml
 
 sudo crictl images
 
-#default location for crictl configuration
-sudo cp ./crictl.yaml /etc/crictl.yaml
+watch -n 5 "kubectl get nodes"
+
 ```
 
-Tools to interact with containerd
 
-1. ctrctl
+##  Tools to interact with containerd
+
+1. crictl
 2. ctr
 
 
@@ -102,3 +89,24 @@ https://github.com/containerd/cri/blob/master/docs/registry.md
 https://www.systutorials.com/docs/linux/man/1-ctr/
 
 https://docs.redislabs.com/latest/rs/installing-upgrading/configuring/linux-swap/
+
+Script tested with Ubuntu Server 20.4.1 with all updates as of 2020-12-14
+
+1. containerd version 1.3.3
+2. ctr version 1.3.3
+3. crictl version 1.13.0 
+4. k8s version 1.20.0
+
+
+## crictl.yaml
+  
+  Location of containerd.sock file is specific to Ubuntu. 
+  Change if installing on other linux distributions.
+
+```
+runtime-endpoint: unix:///run/containerd/containerd.sock
+image-endpoint: unix:///run/containerd/containerd.sock
+timeout: 2
+pull-image-on-create: false
+```
+
