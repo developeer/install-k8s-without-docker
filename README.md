@@ -4,7 +4,7 @@ Based on article
 
 https://www.techrepublic.com/article/how-to-install-kubernetes-on-ubuntu-server-without-docker/
 
-Note:  The scripts only install and configure the primary k8s node.
+Note:  The scripts only installs and configures the primary k8s node.
 
 ##  Installs containerd, kubernetes and initialize k8s
 
