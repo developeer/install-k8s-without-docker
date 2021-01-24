@@ -2,6 +2,9 @@
 
 set -x
 
+# This script is run on both the primary and worker nodes
+# install-step1.sh
+
 sudo apt-get install containerd -y
 
 sudo mkdir -p /etc/containerd
@@ -10,7 +13,7 @@ containerd config default | sudo tee /etc/containerd/config.toml
 
 sudo systemctl restart containerd
 
-sudo systemctl status containerd
+sudo systemctl status containerd --lines 1
 
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 

@@ -7,8 +7,9 @@ https://www.techrepublic.com/article/how-to-install-kubernetes-on-ubuntu-server-
 Note:  The script only installs and configures the primary k8s node.
 
 ##  Installs containerd, kubernetes and initialize k8s
+  Run on all nodes
 
-  `install-k8s-01.sh`
+  `install-step1.sh`
 
   ```
 sudo apt-get install containerd -y
@@ -51,6 +52,13 @@ sudo sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab
 
 cat /etc/fstab
 
+```
+
+## Step 2 run on the primary/control plane
+
+`install-step2.sh`
+
+```
 sudo kubeadm config images pull
 
 IP_ADDR=`hostname -I | awk '{print $1}'`
@@ -74,7 +82,6 @@ sudo crictl images
 watch -n 5 "kubectl get nodes"
 
 ```
-
 
 ##  Tools to interact with containerd
 
