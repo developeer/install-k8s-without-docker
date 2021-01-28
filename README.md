@@ -130,3 +130,11 @@ timeout: 2
 pull-image-on-create: false
 ```
 
+## Notes:
+
+- Shutdown of the VM runs until long timeout because it is waiting for containerd shim to shutdown. 
+
+```
+Reached target Power-Off.
+systemd-shutdown[1]: Waiting for process: containerd-shim
+```
