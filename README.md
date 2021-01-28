@@ -18,9 +18,19 @@ sudo mkdir -p /etc/containerd
 
 containerd config default | sudo tee /etc/containerd/config.toml
 
-sudo systemctl restart containerd
+sudo systemctl stop containerd
 
-sudo systemctl status containerd
+curl -LO https://github.com/containerd/containerd/releases/download/v1.4.3/containerd-1.4.3-linux-amd64.tar.gz
+
+tar xvf containerd-1.4.3-linux-amd64.tar.gz
+
+sudo cp bin/* /usr/bin/
+
+sudo systemctl start containerd
+
+rm -rf bin
+
+sudo systemctl status containerd --lines 1
 
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 
@@ -96,6 +106,8 @@ https://github.com/containerd/cri/blob/master/docs/registry.md
 https://www.systutorials.com/docs/linux/man/1-ctr/
 
 https://docs.redislabs.com/latest/rs/installing-upgrading/configuring/linux-swap/
+
+https://containerd.io/
 
 Script tested with Ubuntu Server 20.4.1 with all updates as of 2020-12-14
 
