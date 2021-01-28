@@ -4,10 +4,8 @@ Based on article
 
 https://www.techrepublic.com/article/how-to-install-kubernetes-on-ubuntu-server-without-docker/
 
-Note:  The script only installs and configures the primary k8s node.
-
 ##  Installs containerd, kubernetes and initialize k8s
-  Run on all nodes
+  - Run on all nodes
 
   `install-step1.sh`
 
@@ -92,6 +90,9 @@ sudo crictl images
 watch -n 5 "kubectl get nodes"
 
 ```
+
+## Step 3
+  - Run the join command on all worker nodes
 
 ##  Tools to interact with containerd
 
