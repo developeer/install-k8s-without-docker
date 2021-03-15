@@ -140,5 +140,3 @@ pull-image-on-create: false
 Reached target Power-Off.
 systemd-shutdown[1]: Waiting for process: containerd-shim
 ```
-As of 2021-03-15
-** Issue resolved with latest version of containerd 1.4.4
