@@ -18,11 +18,11 @@ containerd config default | sudo tee /etc/containerd/config.toml
 
 sudo systemctl stop containerd
 
-curl -LO https://github.com/containerd/containerd/releases/download/v1.4.4/containerd-1.4.4-linux-amd64.tar.gz
+curl -LO https://github.com/containerd/containerd/releases/download/v1.6.14/containerd-1.6.14-linux-amd64.tar.gz
 
-tar xvf containerd-1.4.4-linux-amd64.tar.gz
+tar xvf containerd-1.6.14-linux-amd64.tar.gz
 
-rm containerd-1.4.4-linux-amd64.tar.gz
+rm containerd-1.6.14-linux-amd64.tar.gz
 
 sudo cp bin/* /usr/bin/
 
