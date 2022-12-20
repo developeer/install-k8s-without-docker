@@ -114,7 +114,7 @@ https://containerd.io/
 
 Script tested with Ubuntu Server 20.4.1 with all updates as of 2020-12-14
 
-1. containerd version 1.3.3
+1. containerd version 1.6.14
 2. ctr version 1.3.3
 3. crictl version 1.13.0 
 4. k8s version 1.20.0
