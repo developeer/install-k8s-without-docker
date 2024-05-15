@@ -126,6 +126,10 @@ Script tested with Ubuntu Server 24.04 with all updates as of 2024-05-13
 2. ctr version 1.6.31
 3. crictl version 1.30.0 
 4. k8s version 1.30.0
+5. cilium version 
+
+
+includes the installation of metallb.
 
 
 ## crictl.yaml
