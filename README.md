@@ -4,6 +4,12 @@ Based on article
 
 https://www.techrepublic.com/article/how-to-install-kubernetes-on-ubuntu-server-without-docker/
 
+requirements - cilium-cli 
+
+```
+  brew instal cilium-cli
+```
+
 ##  Installs containerd, kubernetes and initialize k8s
   - Run on all nodes
 
