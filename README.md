@@ -18,11 +18,11 @@ containerd config default | sudo tee /etc/containerd/config.toml
 
 sudo systemctl stop containerd
 
-curl -LO https://github.com/containerd/containerd/releases/download/v1.6.14/containerd-1.6.14-linux-amd64.tar.gz
+curl -LO https://github.com/containerd/containerd/releases/download/v1.7.16/containerd-1.7.16-linux-amd64.tar.gz
 
-tar xvf containerd-1.6.14-linux-amd64.tar.gz
+tar xvf containerd-1.7.16-linux-amd64.tar.gz
 
-rm containerd-1.6.14-linux-amd64.tar.gz
+rm containerd-1.7.16-linux-amd64.tar.gz
 
 sudo cp bin/* /usr/bin/
 
@@ -34,7 +34,7 @@ sudo systemctl status containerd --lines 1
 
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 
-sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+sudo apt-add-repository "deb http://pkgs.k8s.io/ kubernetes-xenial main"
 
 sudo apt-get install kubeadm kubelet kubectl -y
 
@@ -110,14 +110,16 @@ https://www.systutorials.com/docs/linux/man/1-ctr/
 
 https://docs.redislabs.com/latest/rs/installing-upgrading/configuring/linux-swap/
 
+https://kifarunix.com/install-and-setup-kubernetes-cluster-on-ubuntu-24-04/
+
 https://containerd.io/
 
-Script tested with Ubuntu Server 20.4.1 with all updates as of 2020-12-14
+Script tested with Ubuntu Server 24.04 with all updates as of 2024-05-13
 
-1. containerd version 1.6.14
-2. ctr version 1.3.3
-3. crictl version 1.13.0 
-4. k8s version 1.20.0
+1. containerd version 1.7.16
+2. ctr version 1.6.31
+3. crictl version 1.30.0 
+4. k8s version 1.30.0
 
 
 ## crictl.yaml
