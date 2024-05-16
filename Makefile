@@ -15,4 +15,6 @@ step2:
 join:
 	kubeadm token create --print-join-command
 
+pool:
+	kubectl apply -f ./addresspool.yaml
 
