@@ -27,8 +27,6 @@ cilium install --version 1.15.5
 
 sudo cp ./crictl.yaml /etc/crictl.yaml
 
-sudo crictl images
-
 watch -n 5 "kubectl get nodes"
 
 # https://metallb.universe.tf/installation/

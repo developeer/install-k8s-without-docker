@@ -152,3 +152,14 @@ pull-image-on-create: false
 Reached target Power-Off.
 systemd-shutdown[1]: Waiting for process: containerd-shim
 ```
+
+
+metrics server configuration
+https://serverfault.com/questions/1153770/installed-metrics-server-in-kubernetes-cluster-but-getting-serviceunavailable
+
+
+https://blog.devops.dev/deploying-kube-prometheus-stack-with-persistent-storage-on-kubernetes-cluster-24473f4ea34f
+
+
+
+
